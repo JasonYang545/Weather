@@ -34,6 +34,7 @@ elif user_city == "New York":
     source_code = page.read()
     source_string = str(source_code)
 
+# Comment
 
 # Part 2: Reads/converts data to string + parses data to find 6 pieces of info
 
