@@ -1,43 +1,127 @@
-# Part 1: Uses urllib.request that accesses data from 4 US cities + prompts user input
+# JASON YANG
 
 print("Your Weather Report")
 print()
-print("Current observations are available for: ")
-cities = ["Chicago", "Miami", "Los Angeles", "New York"]
-for city in cities:
-    print("- "+city)
 
-print()
+city_dict = {
+    "Atlanta": "ATL", 
+    "Los Angeles": "LAX",
+    "Chicago": "ORD",
+    "Dallas":" DFW",
+    "Denver": "DEN",
+    "New York": "JFK",
+    "San Francisco": "SFO",
+    "Seattle": "SEA",
+    "Las Vegas": "LAS",
+    "Orlando": "MCO",
+    "Newark": "EWR",
+    "Charlotte": "CLT",
+    "Phoenix": "PHX",
+    "Houston": "IAH",
+    "Miami": "MIA",
+    "Boston": "BOS",
+    "Minneapolis": "MSP",
+    "Fort Lauderdale": "FLL",
+    "Detroit": "DTW",
+    "Philadelphia": "PHL",
+    "Baltimore": "BWI",
+    "Salt Lake City": "SLC",
+    "San Diego": "SAN",
+    "Washington": "IAD",
+    "Tampa": "TPA",
+    "Portland": "PDX",
+    "Honolulu": "HNL",
+    "San Antonio": "SAT",
+    "San Jose": "SJC",
+    "Austin": "AUS",
+    "Jacksonville": "JAX",
+    "Columbus": "CMH",
+    "Indianapolis": "IND",
+    "El Paso": "ELP",
+    "Nashville": "BNA",
+    "Oklahoma City": "OKC",
+    "Memphis": "MEM",
+    "Milwaukee": "MKE",
+    "Albuquerque": "ABQ",
+    "Tucson": "TUS",
+    "Fresno": "FAT",
+    "Sacremento": "SMF",
+    "Kansas City": "MCI",
+    "Colorado Springs": "COS",
+    "Omaha": "OMA",
+    "Long Beach": "LGB",
+    "Oakland": "OAK",
+    "Tusla": "TUL",
+    "New Orleans": "MSY",
+    "Wichita": "ICT",
+    "Cleveland": "CLE",
+    "Anaheim": "SNA",
+    "Riverside": "RAL",
+    "Lexington": "LEX",
+    "Henderson": "HSH",
+    "Stockton": "SCK",
+    "Cincinnati": "LUK",
+    "St. Louis": "BLV",
+    "Pittsburgh": "PIT",
+    "Greensboro": "GSO",
+    "Lincoln": "LNK",
+    "Anchorage": "ANC",
+    "Durham": "RDU",
+    "Fort Myers": "RSW",
+    "San Juan": "SJU",
+    "Kahului": "OGG",
+    "Hartford": "BDL",
+    "West Palm Beach": "PBI",
+    "Burbank": "BUR",
+    "Buffalo": "BUF",
+    "Richmond": "RIC",
+    "Toledo": "TOL",
+    "Laredo": "LRD",
+    "Chandler": "CHD",
+    "Madison": "MSN",
+    "Lubbock": "LBB",
+    "Reno": "RNO",
+    "Glendale": "GEU",
+    "Chesapeake": "CPK",
+    "Norfolk": "ORF",
+    "Fremont": "FET",
+    "Garland": "YYB",
+    "Irving": "DFW",
+    "Hialeah": "MIA",
+    "Boise": "BOI",
+    "Spokane": "GEG",
+    "Baton Rouge": "BTR",
+    "Syracuse": "SYR",
+    "Rochester": "RST",
+    "Plano": "DFW",
+    "Tacoma": "SEA",
+    "San Bernardino": "SBD",
+    "Modesto": "MOD",
+    "Fontana": "SNA",
+    "Vancouver": "YVR",
+    "Providence": "PVD",
+    "Worcester": "ORH",
+    "Pasadena": "BUR",
+    "Dayton": "DAY",
+    "Stamford": "SFB",
+    "New Haven": "HVN",
+    "Topeka": "FOE" 
+    }
+
 user_city = input("Enter the city you would like a weather report for: ").title()
 while True:
-    if user_city in cities:
+    if user_city in city_dict.keys():
         print("Accessing weather data . . .")
         break
     else:
         user_city = input("No data available. Please try another city: ").title()
 
 import urllib.request
-if user_city == "Chicago":
-    page = urllib.request.urlopen('https://w1.weather.gov/xml/current_obs/KORD.xml')
-    source_code = page.read()
-    source_string = str(source_code)
-elif user_city == "Miami":
-    page = urllib.request.urlopen('https://w1.weather.gov/xml/current_obs/KMIA.xml')
-    source_code = page.read()
-    source_string = str(source_code)
-elif user_city == "Los Angeles":
-    page = urllib.request.urlopen('https://w1.weather.gov/xml/current_obs/KLAX.xml')
-    source_code = page.read()
-    source_string = str(source_code)
-elif user_city == "New York":
-    page = urllib.request.urlopen('https://w1.weather.gov/xml/current_obs/KJFK.xml')
-    source_code = page.read()
-    source_string = str(source_code)
+page=urllib.request.urlopen('https://w1.weather.gov/xml/current_obs/K'+city_dict.get(user_city)+'.xml')
+source_code = page.read()
+source_string = str(source_code)
 
-# Comment
-
-# Part 2: Reads/converts data to string + parses data to find 6 pieces of info
-
+# Reads/converts data to string + parses data to find 6 pieces of weather info
 city_weather={}
 def get_parts(text):
     location_start = source_string.find(text+">")
@@ -77,8 +161,7 @@ print("The current weather has been accessed for", user_city)
 print()
 
 
-# Part 3: With info in dict, prompts user for desired info + reprompts
-
+# With info in dict, prompts user for desired info + reprompts
 print("Information available:")
 info_list = ["location", "weather", "temperature", "humidity", "wind", "observation"]
 for data in info_list:
@@ -90,13 +173,15 @@ inquiry = input("What weather information would you like? ").lower()
 while inquiry != "done":
     if inquiry in info_list:
         if inquiry == "location":
-            print("The location is", user_city)
+            print("Your entered location:", user_city)
             print()
         elif inquiry == "weather":
             print("The current weather in", user_city, "is", current_weather)
             print()
         elif inquiry == "temperature":
             print("The temperature in", user_city, "is", temp, "degrees F")
+            if (float(temp)<=50):
+                print("Dont't forget your jacket!")
             print()
         elif inquiry == "humidity":
             print("The humidity in", user_city, "is", humidity)
@@ -113,8 +198,7 @@ while inquiry != "done":
     inquiry = input('What weather information would you like? Or, to end, enter "done". ').lower()
 
 
-# Part 4: Option to print full report to external OS file
-
+# Option to print full report to external OS file
 print()
 file = input("Would you like to export the full weather report? (yes/no) ").lower()
 
@@ -128,8 +212,3 @@ if file == "yes":
     print("The full weather report has been exported.")
 else:
     print("Goodbye")
-
-   
-
- 
-
